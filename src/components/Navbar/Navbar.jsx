@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
+import { FiArrowRight } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
 import NavLinks from "./NavLinks";
 
@@ -12,48 +13,60 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", darkMode);
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
   }, [darkMode]);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 24);
+      setScrolled(window.scrollY > 30);
     };
 
-    handleScroll();
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setMobileOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
-      <div
-        className={`mx-auto mt-4 flex max-w-7xl items-center justify-between rounded-full border px-4 py-3 shadow-lg backdrop-blur-xl transition-all duration-300 sm:px-6 ${
-          scrolled
-            ? "border-orange-200/70 bg-white/80 dark:border-gray-700/70 dark:bg-gray-900/80"
-            : "border-transparent bg-white/70 dark:bg-gray-950/60"
-        }`}
-      >
+    <header
+      className={`fixed left-0 top-0 z-50 w-full transition-all duration-500 ${
+        scrolled
+          ? "border-b border-white/70 bg-white/80 shadow-[0_10px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl dark:border-gray-800/70 dark:bg-gray-900/80"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <a href="#home" className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-amber-400 p-1 shadow-md">
-            <img
-              src={darkMode ? logoDark : logoLight}
-              alt="Roncloud Technologies"
-              className="h-full w-full rounded-full object-cover"
-            />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-sm font-semibold uppercase tracking-[0.25em] text-orange-500">
+          <img
+            src={darkMode ? logoDark : logoLight}
+            alt="Roncloud Technologies"
+            className="h-12 w-auto object-contain"
+          />
+          <div className="hidden sm:block">
+            <p className="text-sm font-semibold tracking-[0.2em] text-orange-500 uppercase">
               Roncloud
-            </span>
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              Digital Studio
-            </span>
+            </p>
+            <p className="text-xs text-gray-600 dark:text-gray-300">
+              Digital Innovation
+            </p>
           </div>
         </a>
 
-        <nav className="hidden items-center gap-7 lg:flex">
+        <nav className="hidden items-center gap-8 lg:flex">
           <NavLinks />
         </nav>
 
@@ -61,43 +74,40 @@ const Navbar = () => {
           <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
           <a
             href="#contact"
-            className="rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:scale-105 hover:shadow-orange-500/30"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:-translate-y-0.5 hover:shadow-xl"
           >
-            Let&apos;s Talk
+            Get Started
+            <FiArrowRight size={16} />
           </a>
         </div>
 
         <button
-          type="button"
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 bg-white/80 text-gray-700 shadow-sm transition hover:border-orange-400 hover:text-orange-500 dark:border-gray-700 dark:bg-gray-800/80 dark:text-gray-200 lg:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 bg-white/80 text-gray-700 shadow-sm transition hover:bg-orange-500 hover:text-white dark:border-gray-700 dark:bg-gray-800/80 dark:text-gray-200 lg:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle navigation"
+          aria-label="Toggle navigation menu"
         >
           {mobileOpen ? <HiOutlineX size={22} /> : <HiOutlineMenuAlt3 size={22} />}
         </button>
       </div>
 
-      <div
-        className={`overflow-hidden transition-all duration-300 lg:hidden ${
-          mobileOpen ? "mt-3 max-h-96 opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <div className="mx-4 rounded-3xl border border-orange-100 bg-white/95 p-5 shadow-2xl dark:border-gray-700 dark:bg-gray-900/95">
-          <div className="flex flex-col gap-4">
-            <NavLinks mobile onNavigate={() => setMobileOpen(false)} />
-            <div className="flex items-center justify-between border-t border-gray-200 pt-4 dark:border-gray-700">
+      {mobileOpen && (
+        <div className="border-t border-gray-200 bg-white/95 px-4 py-5 shadow-2xl backdrop-blur-xl dark:border-gray-800 dark:bg-gray-900/95 lg:hidden">
+          <div className="mx-auto flex max-w-7xl flex-col gap-4">
+            <NavLinks onLinkClick={() => setMobileOpen(false)} />
+            <div className="flex items-center justify-between gap-3 pt-2">
               <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
               <a
                 href="#contact"
-                className="rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2 text-sm font-semibold text-white"
                 onClick={() => setMobileOpen(false)}
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2 text-sm font-semibold text-white"
               >
-                Let&apos;s Talk
+                Let’s Talk
+                <FiArrowRight size={15} />
               </a>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </header>
   );
 };
