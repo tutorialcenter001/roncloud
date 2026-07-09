@@ -1,3 +1,4 @@
+import FeaturedProjects from "./components/FeaturedProjects/FeaturedProjects";
 import Hero from "./components/Hero/Hero";
 import Navbar from "./components/Navbar/Navbar";
 import TrustedBy from "./components/TrustedBy/TrustedBy";
@@ -8,6 +9,7 @@ function App() {
       <Navbar />
       <Hero/>
       <TrustedBy />
+      <FeaturedProjects />
 
       {/* <section
         id="home"
