@@ -1,15 +1,33 @@
+import About from "./components/About/About";
+import MissionVision from "./components/About/MissionVision";
+import Contact from "./components/Contact/Contact";
+import CTA from "./components/CTA/CTA";
 import FeaturedProjects from "./components/FeaturedProjects/FeaturedProjects";
+import Footer from "./components/Footer/Footer";
 import Hero from "./components/Hero/Hero";
 import Navbar from "./components/Navbar/Navbar";
-import TrustedBy from "./components/TrustedBy/TrustedBy";
+import Process from "./components/Process/Process";
+import Services from "./components/Services/Services";
+// import Technologies from "./components/Technologies/Technologies";
+// import TrustedBy from "./components/TrustedBy/TrustedBy";
+import WhyChoose from "./components/WhyChoose/WhyChoose";
 
 function App() {
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(251,191,36,0.18),_transparent_35%),linear-gradient(135deg,_#fff7ed_0%,_#ffffff_40%,_#fef3c7_100%)] text-gray-900 transition-colors duration-300 dark:bg-gray-950 dark:text-gray-100">
       <Navbar />
       <Hero/>
-      <TrustedBy />
+      {/* <TrustedBy /> */}
       <FeaturedProjects />
+      <Services />
+      <WhyChoose />
+      <Process />
+      <About />
+      <MissionVision />
+      {/* <Technologies /> */}
+      <CTA />
+      <Contact />
+      <Footer />
 
       {/* <section
         id="home"
