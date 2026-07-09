@@ -4,7 +4,7 @@ import { FiArrowRight } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
 import NavLinks from "./NavLinks";
 
-import logoLight from "../../assets/images/logo-light.jpg";
+import logoLight from "../../assets/images/logo-light.png";
 import logoDark from "../../assets/images/logo-dark.png";
 
 const Navbar = () => {
@@ -58,10 +58,10 @@ const Navbar = () => {
           />
           <div className="hidden sm:block">
             <p className="text-sm font-semibold tracking-[0.2em] text-orange-500 uppercase">
-              Roncloud
+              Roncloud Technologies
             </p>
             <p className="text-xs text-gray-600 dark:text-gray-300">
-              Digital Innovation
+              Achieving Beyond Limits
             </p>
           </div>
         </a>
